@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inspector Visual del DOM</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo">
+            <i class="fa-solid fa-sitemap"></i> Inspector DOM
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="index.html#teoria">Teoría</a></li>
+                <li><a href="index.html#p5-ejemplos">Ejemplos p5.js</a></li>
+                <li><a href="index.html#proyectos">Gráficos Khan</a></li>
+                <li><a href="dom-inspector.html" class="active">Inspector DOM</a></li>
+                <li><a href="https://github.com/estrella18iortiz-byte/ACT-Despliege-de-graficos.git" target="_blank" class="btn-repo"><i class="fa-brands fa-github"></i> Repositorio</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1 class="section-title">Árbol Jerárquico del DOM</h1>
+        <p class="subtitle">Visualización gráfica de la estructura HTML del sitio web.</p>
+
+        <div class="inspector-controls">
+            <label for="page-selector">Selecciona una página para inspeccionar:</label>
+            <select id="page-selector">
+                <option value="index.html">index.html (Página Principal)</option>
+                <option value="dom-inspector.html">dom-inspector.html (Esta página)</option>
+            </select>
+            <button onclick="generarArbolDOM()"><i class="fa-solid fa-rotate"></i> Actualizar Árbol</button>
+        </div>
+
+        <div id="tree-container" class="tree-container">
+            <p class="loading-text">Cargando estructura del DOM...</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 - Proyecto de Despliegue. Código fuente en <a href="https://github.com/estrella18iortiz-byte/ACT-Despliege-de-graficos.git" target="_blank">GitHub</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

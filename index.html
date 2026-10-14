@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto Web: Gráficos y DOM</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- LIBRERÍA P5.JS (CDN OFICIAL) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo">
+            <i class="fa-solid fa-code"></i> Mi Portafolio Web
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Inicio</a></li>
+                <li><a href="#teoria">Teoría</a></li>
+                <li><a href="#p5-ejemplos">Ejemplos p5.js</a></li>
+                <li><a href="#proyectos">Gráficos Khan</a></li>
+                <li><a href="dom-inspector.html">Inspector DOM</a></li>
+                <li><a href="https://github.com/estrella18iortiz-byte/ACT-Despliege-de-graficos.git" target="_blank" class="btn-repo"><i class="fa-brands fa-github"></i> Repositorio</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        
+        <!-- SECCIÓN HERO -->
+        <section class="hero">
+            <h1>Despliegue de Gráficos Interactivos</h1>
+            <p>Explorando el poder de <code>&lt;canvas&gt;</code>, <code>p5.js</code> y la estructura del DOM.</p>
+            <a href="#p5-ejemplos" class="cta-button">Ver Ejemplos p5.js</a>
+        </section>
+
+        <!-- SECCIÓN TEÓRICA -->
+        <section id="teoria" class="container">
+            <h2 class="section-title">Fundamentos Teóricos</h2>
+            
+            <div class="theory-grid">
+                <article class="theory-card">
+                    <h3><i class="fa-solid fa-paintbrush"></i> La etiqueta &lt;canvas&gt; y el contexto 2D</h3>
+                    <p>El elemento <code>&lt;canvas&gt;</code> es una superficie de dibujo bitmap en HTML5. Para dibujar en él, se debe obtener su <strong>contexto de renderizado</strong>. El más común es <code>'2d'</code>, que permite dibujar formas, textos e imágenes mediante una API de JavaScript.</p>
+                    <ul>
+                        <li><code>getContext('2d')</code>: Devuelve el objeto de contexto 2D.</li>
+                        <li>Permite dibujar rectángulos (<code>fillRect</code>), círculos (<code>arc</code>), líneas y curvas Bézier.</li>
+                        <li>Es fundamental para animaciones de alto rendimiento y gráficos generativos.</li>
+                    </ul>
+                </article>
+
+                <article class="theory-card">
+                    <h3><i class="fa-solid fa-cubes"></i> Fundamentos de p5.js</h3>
+                    <p><strong>p5.js</strong> es una librería de JavaScript que hace que el dibujo en canvas sea accesible para artistas, diseñadores y principiantes. Se basa en los principios de Processing.</p>
+                    <ul>
+                        <li><code>setup()</code>: Se ejecuta una vez al inicio. Se usa para crear el lienzo (<code>createCanvas()</code>) y configuraciones iniciales.</li>
+                        <li><code>draw()</code>: Se ejecuta en bucle continuo (60 fps). Aquí se dibuja la escena y se actualizan las animaciones.</li>
+                        <li>Simplifica la sintaxis: <code>ellipse(x, y, ancho, alto)</code> en lugar de <code>ctx.arc()</code>.</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: EJEMPLOS CON P5.JS -->
+        <section id="p5-ejemplos" class="container">
+            <h2 class="section-title">Mis Creaciones con p5.js</h2>
+            <p class="subtitle">Dibujos y animaciones creados directamente con la librería p5.js en este sitio web.</p>
+
+            <div class="p5-grid">
+                <div class="p5-card">
+                    <h3>Dibujo Estático: Paisaje Nocturno</h3>
+                    <div id="sketch-estatico" class="p5-canvas-container"></div>
+                </div>
+
+                <div class="p5-card">
+                    <h3>Animación: Círculo Interactivo</h3>
+                    <div id="sketch-animado" class="p5-canvas-container"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE PROYECTOS (KHAN ACADEMY) -->
+        <section id="proyectos" class="container">
+            <h2 class="section-title">Galería de Gráficos (Khan Academy)</h2>
+            <p class="subtitle">Proyectos originales creados en Khan Academy. Haz clic en cada botón para verlos en su sitio original.</p>
+
+            <div class="projects-grid">
+                <!-- Proyecto 1 -->
+                <div class="project-card">
+                    <h3>¿Qué hay de cena?</h3>
+                    <div class="project-image">
+                        <div class="placeholder-img">🍽️ Proyecto: ¿Qué hay de cena?</div>
+                    </div>
+                    <a href="https://es.khanacademy.org/computer-programming/derivado-de-proyecto-qu-hay-de-cena/5577295583363072" target="_blank" class="project-btn">
+                        Ver en Khan Academy <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+
+                <!-- Proyecto 2 -->
+                <div class="project-card">
+                    <h3>Desafío: Rana Loca</h3>
+                    <div class="project-image">
+                        <div class="placeholder-img">🐸 Proyecto: Rana Loca</div>
+                    </div>
+                    <a href="https://es.khanacademy.org/computer-programming/derivado-de-desafo-rana-loca/4913915738570752" target="_blank" class="project-btn">
+                        Ver en Khan Academy <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+
+                <!-- Proyecto 3 -->
+                <div class="project-card">
+                    <h3>Dientes de Conejo</h3>
+                    <div class="project-image">
+                        <div class="placeholder-img">🐰 Proyecto: Dientes de Conejo</div>
+                    </div>
+                    <a href="https://es.khanacademy.org/computer-programming/derivado-de-desafo-dientes-de-conejo/4772477298130944" target="_blank" class="project-btn">
+                        Ver en Khan Academy <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+
+                <!-- Proyecto 4 -->
+                <div class="project-card">
+                    <h3>Día Nevado Soleado</h3>
+                    <div class="project-image">
+                        <div class="placeholder-img">❄️ Proyecto: Día Nevado Soleado</div>
+                    </div>
+                    <a href="https://es.khanacademy.org/computer-programming/derivado-de-desafo-da-nevado-soleado/6678360445796352" target="_blank" class="project-btn">
+                        Ver en Khan Academy <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+
+                <!-- Proyecto 5 -->
+                <div class="project-card">
+                    <h3>Muñeco de Nieve que Saluda</h3>
+                    <div class="project-image">
+                        <div class="placeholder-img">⛄ Proyecto: Muñeco de Nieve</div>
+                    </div>
+                    <a href="https://es.khanacademy.org/computer-programming/derivado-de-desafo-mueco-de-nieve-que-saluda/5854974815617024" target="_blank" class="project-btn">
+                        Ver en Khan Academy <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 - Proyecto de Despliegue. Código fuente en <a href="https://github.com/estrella18iortiz-byte/ACT-Despliege-de-graficos.git" target="_blank">GitHub</a></p>
+    </footer>
+
+    <script src="p5-sketches.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
