@@ -6,6 +6,192 @@
     <title>Inspector Visual del DOM</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Estilos específicos para el árbol del DOM -->
+    <style>
+        .dom-tree-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 40px 0;
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: auto;
+            padding: 20px;
+        }
+
+        .node {
+            background-color: #1e1e2f;
+            color: #4da8da;
+            border: 2px solid #4da8da;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 2;
+        }
+
+        .node.leaf {
+            background-color: #2a2a3a;
+            color: #a0a0b0;
+            border-color: #555;
+            font-size: 0.9em;
+            padding: 5px 12px;
+        }
+
+        .node.semantic {
+            color: #f0a500;
+            border-color: #f0a500;
+        }
+
+        .node.root {
+            color: #e94560;
+            border-color: #e94560;
+            font-size: 1.1em;
+        }
+
+        /* Conectores (Líneas) */
+        .line-down {
+            width: 2px;
+            height: 30px;
+            background-color: #888;
+            z-index: 1;
+        }
+
+        .branches {
+            display: flex;
+            gap: 50px;
+            position: relative;
+            padding-top: 30px;
+        }
+
+        .branch {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Línea horizontal superior */
+        .branches::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 15%;
+            right: 15%;
+            height: 2px;
+            background-color: #888;
+            z-index: 1;
+        }
+
+        /* Línea vertical que conecta la rama con la línea horizontal */
+        .branch::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            width: 2px;
+            height: 30px;
+            background-color: #888;
+            z-index: 1;
+        }
+
+        .children-row {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            position: relative;
+        }
+
+        /* Línea horizontal para los hijos del head */
+        .children-row::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            left: 25%;
+            right: 25%;
+            height: 2px;
+            background-color: #888;
+            z-index: 1;
+        }
+        
+        .children-row .node::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            width: 2px;
+            height: 30px;
+            background-color: #888;
+            z-index: 1;
+            transform: translateX(-50%);
+        }
+
+        .children-column {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+            align-items: flex-start;
+            position: relative;
+        }
+
+        .children-column .node {
+            margin-left: 20px;
+        }
+
+        .children-column::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            left: 30px;
+            width: 2px;
+            height: calc(100% + 30px);
+            background-color: #888;
+            z-index: 1;
+        }
+        
+        .children-column .node::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -20px;
+            width: 20px;
+            height: 2px;
+            background-color: #888;
+            z-index: 1;
+        }
+
+        .inspector-controls {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .inspector-controls select {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        
+        .inspector-controls button {
+            background-color: #4da8da;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Estilos para modo oscuro si tu sitio usa fondos oscuros */
+        .dark-mode .dom-tree-container { background-color: #1a1a2e; }
+    </style>
 </head>
 <body>
 
@@ -27,26 +213,55 @@
 
     <main class="container">
         <h1 class="section-title">Árbol Jerárquico del DOM</h1>
-        <p class="subtitle">Visualización gráfica de la estructura HTML del sitio web.</p>
+        <p class="subtitle" style="text-align: center; color: #666;">Visualización gráfica de la estructura HTML del sitio web.</p>
 
         <div class="inspector-controls">
-            <label for="page-selector">Selecciona una página para inspeccionar:</label>
+            <label for="page-selector">Página visualizada:</label>
             <select id="page-selector">
                 <option value="index.html">index.html (Página Principal)</option>
-                <option value="dom-inspector.html">dom-inspector.html (Esta página)</option>
             </select>
-            <button onclick="generarArbolDOM()"><i class="fa-solid fa-rotate"></i> Actualizar Árbol</button>
+            <button><i class="fa-solid fa-check"></i> Estructura Correcta</button>
         </div>
 
-        <div id="tree-container" class="tree-container">
-            <p class="loading-text">Cargando estructura del DOM...</p>
+        <!-- ÁRBOL DEL DOM VISUAL -->
+        <div class="dom-tree-container">
+            <div class="node root">&lt;html&gt;</div>
+            <div class="line-down"></div>
+            
+            <div class="branches">
+                <!-- Rama Head -->
+                <div class="branch">
+                    <div class="node">&lt;head&gt;</div>
+                    <div class="children-row">
+                        <div class="node leaf">&lt;meta&gt;</div>
+                        <div class="node leaf">&lt;title&gt;</div>
+                        <div class="node leaf">&lt;link&gt;</div>
+                        <div class="node leaf">&lt;script&gt;</div>
+                    </div>
+                </div>
+
+                <!-- Rama Body -->
+                <div class="branch">
+                    <div class="node">&lt;body&gt;</div>
+                    <div class="children-column">
+                        <div class="node semantic">&lt;header&gt;</div>
+                        <div class="node semantic">&lt;main&gt;</div>
+                        <div class="node semantic">&lt;footer&gt;</div>
+                        <div class="node leaf">&lt;script&gt;</div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <div style="text-align: center; margin-top: 30px; color: #555;">
+            <p><em>Nota: Este árbol representa la estructura base de <code>index.html</code>. Los elementos <code>&lt;section&gt;</code>, <code>&lt;div&gt;</code> y <code>&lt;canvas&gt;</code> están anidados dentro de <code>&lt;main&gt;</code>.</em></p>
+        </div>
+
     </main>
 
     <footer>
         <p>&copy; 2026 - Proyecto de Despliegue. Código fuente en <a href="https://github.com/estrella18iortiz-byte/ACT-Despliege-de-graficos.git" target="_blank">GitHub</a></p>
     </footer>
 
-    <script src="script.js"></script>
 </body>
 </html>
